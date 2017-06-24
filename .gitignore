@@ -1,2 +1,5 @@
 # Cache
 Modules/__pycache__
+
+# Python Cache
+ *.pyc
