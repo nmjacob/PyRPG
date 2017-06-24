@@ -1,5 +1,7 @@
 #Used for rendering the screen
 
+import copy
+
 
 #Constants
 
@@ -26,16 +28,30 @@ def _Commands():
 	print("(Direction): moves the user in that direction")
 	print("Directions: n(up), w(left), e(right), s(down)")
 
+def _ApplyCreatures(matrixIn, creatures):
+	matrix = copy.deepcopy(matrixIn)
+
+	for x in range(0, len(creatures)):
+		loc = creatures[x].GetPosition()
+		icon = creatures[x].GetIcon()
+
+		matrix[loc[1]][loc[0]] = icon
+
+	return matrix
+
+
 #Public Functions
 
 #Renders everything on the screen
 #INPUT:
 #	Matrix to render. Created from the Vision module, which returns how much the user should see of the map
-#PROCESS
+#PROCESSdeepcopy
 #	Clears the screen uses the _ClearScreen function
 #	Renders the matrix
 #	Displays available commands
-def Render(matrix):
+def Render(matrix, creatures):
+
+	matrix = _ApplyCreatures(matrix, creatures)
 
 	#Clear the screen
 	_ClearScreen()
