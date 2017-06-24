@@ -15,6 +15,16 @@ _NEWLINE_COUNT = 50
 def _ClearScreen():
 	print("\n" * _NEWLINE_COUNT)
 
+#Function to include the commands for the user to submit
+#Currently supported commands:
+#	a (Direction)
+#		Attacks in the direction specified. Uses the same format for direction as moving
+#	(Direction) Moves the character in that direction
+		#Supported directions are n(up), w(left), e(right), s(down)
+def _Commands():
+	print("\n\nCommands:\na: Attack. Follow with a direction")
+	print("(Direction): moves the user in that direction")
+	print("Directions: n(up), w(left), e(right), s(down)")
 
 #Public Functions
 
@@ -24,7 +34,7 @@ def _ClearScreen():
 #PROCESS
 #	Clears the screen uses the _ClearScreen function
 #	Renders the matrix
-#	TODO: Displays the commands the user can use
+#	Displays available commands
 def Render(matrix):
 
 	#Clear the screen
@@ -34,3 +44,5 @@ def Render(matrix):
 	for x in range(0, len(matrix)):
 		print("".join(matrix[x]))
 
+	#Display commands
+	_Commands()
