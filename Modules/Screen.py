@@ -27,6 +27,7 @@ def _Commands():
 	print("\n\nCommands:\na: Attack. Follow with a direction")
 	print("(Direction): moves the user in that direction")
 	print("Directions: n(up), w(left), e(right), s(down)")
+	print("q: quits the application")
 
 def _ApplyCreatures(matrixIn, creatures):
 	matrix = copy.deepcopy(matrixIn)

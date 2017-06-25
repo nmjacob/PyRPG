@@ -6,7 +6,10 @@ class Creature():
 		self.y = y
 		self.name = name
 		self.icon = icon
-		self.isPlayer = isPlayer
+		if isPlayer == "yes":
+			self.isPlayer = True
+		else:
+			self.isPlayer = False
 	
 	def GetPosition(self):
 		return [self.x, self.y]
@@ -22,3 +25,8 @@ class Creature():
 
 	def GetName(self):
 		return self.name
+
+	def SetPosition(self, x, y):
+		self.x = x
+		self.y = y
+

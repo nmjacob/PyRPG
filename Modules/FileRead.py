@@ -27,11 +27,9 @@ def GetLevel():
 	return matrix
 
 
-def GetCreatures():
+def GetCreatures(creatures):
 
 	x = 0
-
-	creatures = []
 
 	with open("sample_creatures.dat") as f:
 		array = list(f)
@@ -49,10 +47,10 @@ def GetCreatures():
 		locY = int(str(array[x])[:-1])
 #		print(locY)
 		x += 1
-		isPlayer = bool(str(array[x])[:-1])
+		isPlayer = str(array[x])[:-1]
 #		print(isPlayer)
 		x += 2
 
 		creatures.append(Creature.Creature(locX, locY, name, icon, isPlayer))
 
-	return creatures
+	print(creatures)
