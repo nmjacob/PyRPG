@@ -1,6 +1,7 @@
 #Main file, used for command and control as well
 
 import re
+import copy
 
 from Modules import Screen
 from Modules import FileRead
@@ -11,6 +12,7 @@ from Modules import Creature
 #The current level, in it's current state
 LEVEL = []
 CREATURES = []
+PLAYER_ID = 0
 
 #Private Functions
 
@@ -27,37 +29,64 @@ def _FindPosition(icon):
 			return [x,y]
 			
 	return False
-			
+		
 
+def _FindPlayerId():
+	for x in range(0, len(CREATURES)):
+		if CREATURES[x].IsPlayer():
+			global PLAYER_ID 
+			PLAYER_ID = x
+			break
+
+	
+def _Move(creature, direction):
+	
+	pos = creature.GetPosition()
+
+	global LEVEL
+
+	if 'n' == direction:
+		if LEVEL[pos[1]-1][pos[0]] not in ['=', '|']:
+			pos[1] -= 1
+
+	elif 'e' == direction:
+		if LEVEL[pos[1]][pos[0]+1] not in ['=', '|']:
+			pos[0] += 1
+
+	elif 'w' == direction:
+		if LEVEL[pos[1]][pos[0]-1] not in ['=', '|']:
+			pos[0] -= 1
+
+	elif 's' == direction:
+		if LEVEL[pos[1]+1][pos[0]] not in ['=', '|']:
+			pos[1] += 1
+
+	creature.SetPosition(pos[0], pos[1])
 
 #Public Functionions
 
 def CommandAndControl():
 
+	attackPattern = re.compile("^[a]\s[nwes]$")
+	movePattern = re.compile("^[nwes]$")
+
+	global LEVEL
+
 	LEVEL = FileRead.GetLevel()
 
-	CREATURES = FileRead.GetCreatures()
+	FileRead.GetCreatures(CREATURES)
 
-	Screen.Render(LEVEL, CREATURES)
+	_FindPlayerId()
 
-	print(LEVEL)
+	while True:
+		Screen.Render(LEVEL, CREATURES)
 
-	#print(_FindPosition('S'))
+		playerCommand = input("Command: ")
 
-	#player = Creature.Creature(_FindPosition('S'))
+		if movePattern.match(playerCommand):
+			_Move(CREATURES[PLAYER_ID], playerCommand)
 
-	#print(player.GetPosition())
-
-	print(LEVEL)
-
-	#print(_FindPosition())
+		if "q" == playerCommand:
+			break
 
 CommandAndControl()
-
-#    attackPattern = re.compile("^[a]\s[nwes]$")
-#    movePattern = re.compile("^[nwes]$")
-
-#    command = input("Command: ")
-
-#    if movePattern.match(command):
-		
